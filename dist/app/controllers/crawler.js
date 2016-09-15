@@ -77,6 +77,9 @@ let main = function (num, time) {
             let _arr = urls.slice(0, num);
             yield crawler(_arr);
             let count = num;
+            console.log('------------------------------------');
+            console.log('------------------------------------');
+            console.log('------------------------------------');
             console.log('the crawl time is ', time);
             console.log('now is crawl ', count);
             console.log('urls length', urls.length);
@@ -86,14 +89,20 @@ let main = function (num, time) {
                 yield crawler(_arr);
                 count += num;
                 console.log('------------------------------------');
+                console.log('------------------------------------');
+                console.log('------------------------------------');
                 console.log('the crawl time is ', time);
                 console.log('now is crawl ', count);
                 console.log('urls length', urls.length);
                 yield timeout(1 * 1000 * 10);
             }
             console.log('==> ==> ==> ==> ==> ==> ==> ==> ==> ==>');
+            console.log('==> ==> ==> ==> ==> ==> ==> ==> ==> ==>');
+            console.log('==> ==> ==> ==> ==> ==> ==> ==> ==> ==>');
             console.log('all urls walk over.');
             yield timeout(1 * 1000 * 60);
+            console.log('==> ==> ==> ==> ==> ==> ==> ==> ==> ==>');
+            console.log('==> ==> ==> ==> ==> ==> ==> ==> ==> ==>');
             console.log('==> ==> ==> ==> ==> ==> ==> ==> ==> ==>');
             console.log('next time crawl.');
             console.log('the crawl time is ', time + 1);
