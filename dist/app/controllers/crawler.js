@@ -96,6 +96,7 @@ let main = function (num, time) {
             yield timeout(1 * 1000 * 60);
             console.log('==> ==> ==> ==> ==> ==> ==> ==> ==> ==>');
             console.log('next time crawl.');
+            console.log('the crawl time is ', time + 1);
             yield timeout(1 * 1000 * 60);
             yield main(fast, time + 1);
         }
