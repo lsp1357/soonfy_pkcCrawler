@@ -141,9 +141,9 @@ let tvCrawler = async function (vid, filmId) {
       let vlist = JSON.parse(body).data.list;
       tvlist = tvlist.concat(vlist);
     }
-    for(let tv of tvlist){
-      await timeout(10 * 1000);
+    let promises = tvlist.map(async (tv, index) => {
       try {
+        await timeout(1 * 1000 * 5 * (index/100));
         let requrl = 'http://videocenter-2039197532.cn-north-1.elb.amazonaws.com.cn//dynamicinfo?vid=' + tv.video_id;
         let options = {
           url: requrl,
@@ -181,7 +181,8 @@ let tvCrawler = async function (vid, filmId) {
       } catch (error) {
         console.log(error);
       }
-    }
+    })
+    return Promise.all(promises);
   } catch (error) {
     console.log(error);
   }
@@ -213,9 +214,9 @@ let showCrawler = async function (vcid, vsite, vpath, filmId) {
       let vlist = JSON.parse(data);
       showlist = showlist.concat(vlist);
     }
-    for(let show of showlist){
-      await timeout(10 * 1000);
+    let promises = showlist.map(async (show, index) => {
       try {
+        await timeout(1 * 1000 * 5 * (index/100));
         let requrl = 'http://videocenter-2039197532.cn-north-1.elb.amazonaws.com.cn//dynamicinfo?vid=' + show.id;
         let options = {
           url: requrl,
@@ -252,7 +253,8 @@ let showCrawler = async function (vcid, vsite, vpath, filmId) {
       } catch (error) {
         console.log(error);
       }
-    }
+    })
+    return Promise.all(promises);
   } catch (error) {
     console.log(error);
   }

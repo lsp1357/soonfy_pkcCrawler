@@ -161,9 +161,9 @@ let showCrawler = function (url, filmId) {
                     }
                 });
             }
-            for (let show of showlist) {
+            let promises = showlist.map((show, index) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    yield timeout(10 * 1000);
+                    yield timeout(1 * 1000 * 5 * (index / 100));
                     let options = {
                         url: show.url,
                         timeout: 1000 * 60 * 2
@@ -213,7 +213,8 @@ let showCrawler = function (url, filmId) {
                 catch (error) {
                     console.log(error);
                 }
-            }
+            }));
+            return Promise.all(promises);
         }
         catch (error) {
             console.log(error);

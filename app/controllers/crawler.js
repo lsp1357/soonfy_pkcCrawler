@@ -7,21 +7,9 @@ import {Youku} from './youku'
 import {Tudou} from './tudou'
 import {Mgtv} from './mgtv'
 
-let schedule = require('node-schedule');
-
-let iqlsGetter = async function () {
+let urlsGetter = async function () {
   try {
-    let urls = await Url.find({site: {$in: ['爱奇艺', '腾讯视频', '乐视视频', '搜狐视频']}}).sort({site: 1, category: 1}).exec();
-    return urls;
-  } catch (error) {
-    console.log(error);
-    filmGetter();
-  }
-}
-
-let ytmGetter = async function () {
-  try {
-    let urls = await Url.find({site: {$in: ['优酷', '土豆网', '芒果TV']}}).sort({site: 1, category: 1}).exec();
+    let urls = await Url.find().sort({site: 1, category: 1}).exec();
     return urls;
   } catch (error) {
     console.log(error);
@@ -34,48 +22,6 @@ let timeout = async function (ms) {
     setTimeout(resolve, ms);
   })
 }
-
-
-//继发执行
-// let main = async function () {
-//   try {
-//     let urls = await urlGetter();
-//     for(let obj of urls){
-//       console.log(obj);
-//       switch (obj.site) {
-//         case '爱奇艺视频':
-//           // await Iqiyi.parse(obj)
-//           break;
-//         case '腾讯视频':
-//           // await QQ.parse(obj)
-//           break;
-//         case '乐视视频':
-//           // await Letv.parse(obj)
-//           break;
-//         case '搜狐视频':
-//           // await Sohu.parse(obj)
-//           break;
-//         case '优酷视频':
-//           // await Youku.parse(obj)
-//           break;
-//         case '土豆视频':
-//           // await Tudou.parse(obj)
-//           break;
-//         case '芒果视频':
-//           await Mgtv.parse(obj)
-//           break;
-//         default:
-//           console.log('obj site is error.')
-//           console.log(obj)
-//           break;
-//       }
-//     }
-//     console.log('all urls walk over.');
-//   } catch (error) {
-//     console.log(error);
-//   }
-// }
-
 
 //并发执行
 let crawler = async function (arr) {
@@ -108,91 +54,49 @@ let crawler = async function (arr) {
   return await Promise.all(promises);
 }
 
-let fastCrawler = async function (fast) {
-  try {
-    let urls = await iqlsGetter();
-    let _arr = urls.slice(0, fast);
-    await crawler(_arr);
-    let count = fast;
-    while (count < urls.length) {
-      let _arr = urls.slice(count, count + fast);
-      await crawler(_arr);
-      count += fast;
-      await timeout(1 * 1000);
-      console.log('==> ==> ==> ==> ==> ==> ==> ==> ==> ==>');
-      console.log('fast now is crawl ', count);
-    }
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-let slowCrawler = async function (slow) {
-  try {
-    let urls = await ytmGetter();
-    let _arr = urls.slice(0, slow);
-    await crawler(_arr);
-    let count = slow;
-    while (count < urls.length) {
-      let _arr = urls.slice(count, count + slow);
-      await crawler(_arr);
-      count += slow;
-      await timeout(10 * 1000);
-      console.log('==> ==> ==> ==> ==> ==> ==> ==> ==> ==>');
-      console.log('slow now is crawl ', count);
-    }
-  } catch (error) {
-    console.log(error);
-  }
-}
 //分批次
-let main = async function (fast, slow) {
+let main = async function (num, time) {
   try {
     console.log('start crawler...');
 
-    let urls = await iqlsGetter();
-    let _arr = urls.slice(0, fast);
+    let urls = await urlsGetter();
+    console.log(urls.length);
+    await timeout(1 * 1000 * 10);
+
+    let _arr = urls.slice(0, num);
     await crawler(_arr);
-    let count = fast;
-    console.log('fast now is crawl ', count);
+    let count = num;
+    console.log('the crawl time is ', time);
+    console.log('now is crawl ', count);
+    console.log('urls length', urls.length);
+    await timeout(1 * 1000 * 10);
+
     while (count < urls.length) {
-      let _arr = urls.slice(count, count + fast);
+      let _arr = urls.slice(count, count + num);
       await crawler(_arr);
-      count += fast;
-      await timeout(1 * 1000);
-      console.log('==> ==> ==> ==> ==> ==> ==> ==> ==> ==>');
-      console.log('fast now is crawl ', count);
+      count += num;
+      console.log('------------------------------------');
+      console.log('the crawl time is ', time);
+      console.log('now is crawl ', count);
+      console.log('urls length', urls.length);
+      await timeout(1 * 1000 * 10);
     }
 
-    urls = await ytmGetter();
-    _arr = urls.slice(0, slow);
-    await crawler(_arr);
-    count = slow;
-    console.log('slow now is crawl ', count);
-    while (count < urls.length) {
-      let _arr = urls.slice(count, count + slow);
-      await crawler(_arr);
-      count += slow;
-      await timeout(10 * 1000);
-      console.log('==> ==> ==> ==> ==> ==> ==> ==> ==> ==>');
-      console.log('slow now is crawl ', count);
-    }
-
+    //一轮结束
     console.log('==> ==> ==> ==> ==> ==> ==> ==> ==> ==>');
     console.log('all urls walk over.');
-    // //下次采集
-    // console.log('next time crawl.');
-    // await main(fast, slow);
+    await timeout(1 * 1000 * 60);
+
+    //下次采集
+    console.log('==> ==> ==> ==> ==> ==> ==> ==> ==> ==>');
+    console.log('next time crawl.');
+    await timeout(1 * 1000 * 60);
+    
+    await main(fast, time + 1);
   } catch (error) {
     console.log(error);
   }
 }
 
-//限定并发数目
-main(40, 20);
-
-//上线定时任务
-let rule = new schedule.RecurrenceRule();
-let timer = schedule.scheduleJob('0 0 */5 * * *', function () {
-  main(40, 20);
-});
+//限定并发数目，执行次数
+main(10, 1);

@@ -115,9 +115,9 @@ let tvCrawler = async function (pid, filmId) {
       let vlist = JSON.parse(data).data.vlist
       tvlist = tvlist.concat(vlist);
     }
-    for (let tv of tvlist) {
+    let promises = tvlist.map(async (tv, index) => {
       try {
-        await timeout(1 * 1000);
+        await timeout(1 * 1000 * 5 * (index/100));
         let vid = tv.id;
         let requrl = 'http://mixer.video.iqiyi.com/jp/mixin/videos/' + vid;
         let options = {
@@ -155,7 +155,8 @@ let tvCrawler = async function (pid, filmId) {
       } catch (error) {
         console.log(error);
       }
-    }
+    })
+    return Promise.all(promises);
   } catch (error) {
     console.log(error);
   }
@@ -187,9 +188,9 @@ let showCrawler = async function (pid, cid, filmId) {
       let vlist = JSON.parse(data).data;
       showlist = showlist.concat(vlist);
     }
-    for (let show of showlist) {
+    let promises = showlist.map(async (show, index) => {
       try {
-        await timeout(1 * 1000);
+        await timeout(1 * 1000 * 5 * (index/100));
         let requrl = 'http://mixer.video.iqiyi.com/jp/mixin/videos/' + show.tvId;
         let options = {
           url: requrl,
@@ -217,7 +218,8 @@ let showCrawler = async function (pid, cid, filmId) {
       } catch (error) {
         console.log(error);
       }
-    }
+    })
+    return Promise.all(promises);
   } catch (error) {
     console.log(error);
   }

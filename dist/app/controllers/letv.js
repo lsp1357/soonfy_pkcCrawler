@@ -123,9 +123,9 @@ let tvCrawler = function (pid, cid, length, filmId) {
                     }
                 });
             }
-            for (let tv of tvlist) {
+            let promises = tvlist.map((tv, index) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    yield timeout(1 * 1000);
+                    yield timeout(1 * 1000 * 5 * (index / 100));
                     let requrl = 'http://v.stat.letv.com/vplay/queryMmsTotalPCount?pid=' + pid + '&vid=' + tv.vid;
                     let options = {
                         url: requrl,
@@ -165,7 +165,8 @@ let tvCrawler = function (pid, cid, length, filmId) {
                 catch (error) {
                     console.log(error);
                 }
-            }
+            }));
+            return Promise.all(promises);
         }
         catch (error) {
             console.log(error);
@@ -196,8 +197,8 @@ let showCrawler = function (pid, cid, filmId) {
                     showlist = showlist.concat(vlist);
                 }
             }
-            for (let show of showlist) {
-                yield timeout(1 * 1000);
+            let promises = showlist.map((show, index) => __awaiter(this, void 0, void 0, function* () {
+                yield timeout(1 * 1000 * 5 * (index / 100));
                 try {
                     let requrl = 'http://v.stat.letv.com/vplay/queryMmsTotalPCount?pid=' + pid + '&vid=' + show.vid;
                     let options = {
@@ -238,7 +239,8 @@ let showCrawler = function (pid, cid, filmId) {
                 catch (error) {
                     console.log(error);
                 }
-            }
+            }));
+            return Promise.all(promises);
         }
         catch (error) {
             console.log(error);

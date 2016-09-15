@@ -147,9 +147,9 @@ let tvCrawler = function (pid, filmId) {
             data = body.replace(reg, '$1');
             let tvlist = JSON.parse(data).video_play_list.playlist;
             let countId = _id;
-            for (let tv of tvlist) {
+            let promises = tvlist.map((tv, index) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    yield timeout(1 * 1000);
+                    yield timeout(1 * 1000 * 5 * (index / 100));
                     let requrl = 'http://sns.video.qq.com/fcgi-bin/video_comment_id?otype=json&op=3&vid=' + tv.id;
                     let options = {
                         url: requrl,
@@ -180,7 +180,8 @@ let tvCrawler = function (pid, filmId) {
                 catch (error) {
                     console.log(error);
                 }
-            }
+            }));
+            return Promise.all(promises);
         }
         catch (error) {
             console.log(error);
@@ -213,9 +214,9 @@ let showCrawler = function (pid, filmId) {
                 let vlist = JSON.parse(data).video_play_list.playlist;
                 showlist.concat(vlist);
             }
-            for (let show of showlist) {
+            let promises = showlist.map((show, index) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    yield timeout(1 * 1000);
+                    yield timeout(1 * 1000 * 5 * (index / 100));
                     let vid = show.id;
                     let requrl = 'http://data.video.qq.com/fcgi-bin/data?tid=70&appid=10001007&appkey=e075742beb866145&otype=json&idlist=' + vid;
                     let options = {
@@ -268,7 +269,8 @@ let showCrawler = function (pid, filmId) {
                 catch (error) {
                     console.log(error);
                 }
-            }
+            }));
+            return Promise.all(promises);
         }
         catch (error) {
             console.log(error);
