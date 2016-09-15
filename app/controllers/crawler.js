@@ -102,7 +102,7 @@ let main = async function (num, time) {
     console.log('the crawl time is ', time + 1);
     await timeout(1 * 1000 * 60);
 
-    await main(fast, time + 1);
+    await main(num, time + 1);
   } catch (error) {
     console.log(error);
   }
