@@ -80,7 +80,7 @@ let mvCrawler = async function (pid, filmId) {
       playSum,
       createdAt
     }
-    console.log(_count);
+    // console.log(_count);
     await dbInserter(Count, _count);
     requrl = 'http://sns.video.qq.com/fcgi-bin/video_comment_id?otype=json&op=3&cid=' + pid;
     options = {
@@ -130,7 +130,7 @@ let tvCrawler = async function (pid, filmId) {
       playSum,
       createdAt
     }
-    console.log(_count);
+    // console.log(_count);
     await dbInserter(Count, _count);
     requrl = 'http://s.video.qq.com/loadplaylist?type=6&plname=qq&otype=json&id=' + pid;
     options = {
@@ -230,7 +230,7 @@ let showCrawler = async function (pid, filmId) {
           playSum,
           createdAt
         }
-        console.log(_count);
+        // console.log(_count);
         await dbInserter(Count, _count);
         requrl = 'http://sns.video.qq.com/fcgi-bin/video_comment_id?otype=json&op=3&cid=' + vid;
         options = {

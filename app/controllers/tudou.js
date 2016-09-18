@@ -77,7 +77,7 @@ let mvCrawler = async function (pid, filmId) {
       upSum,
       createdAt
     }
-    console.log(_count);
+    // console.log(_count);
     await dbInserter(Count, _count);
   } catch (error) {
     console.log(error);

@@ -90,7 +90,6 @@ let mvCrawler = function (pid, vid, filmId) {
                 downSum: downSum,
                 createdAt: createdAt
             };
-            console.log(_count);
             yield dbInserter(count_1.Count, _count);
         }
         catch (error) {
@@ -145,7 +144,6 @@ let tvCrawler = function (pid, cid, length, filmId) {
                         commentSum: commentSum,
                         createdAt: createdAt
                     };
-                    console.log(_count);
                     yield dbInserter(count_1.Count, _count);
                     let name = tv.title;
                     let up = JSON.parse(body).up;
@@ -219,7 +217,6 @@ let showCrawler = function (pid, cid, filmId) {
                         commentSum: commentSum,
                         createdAt: createdAt
                     };
-                    console.log(_count);
                     yield dbInserter(count_1.Count, _count);
                     let name = show.title;
                     let up = JSON.parse(body).up;

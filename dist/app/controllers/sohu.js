@@ -107,7 +107,6 @@ let mvCrawler = function (pid, vid, tvid, filmId, url) {
                 downSum: downSum,
                 createdAt: createdAt
             };
-            console.log(_count);
             yield dbInserter(count_1.Count, _count);
         }
         catch (error) {
@@ -157,7 +156,6 @@ let tvCrawler = function (pid, filmId) {
                         commentSum: commentSum,
                         createdAt: createdAt
                     };
-                    console.log(_count);
                     yield dbInserter(count_1.Count, _count);
                     requrl = 'http://score.my.tv.sohu.com/digg/get.do?type=2&tvid=' + tv.tvId;
                     options = {
@@ -253,7 +251,6 @@ let showCrawler = function (pid, cid, filmId) {
                         commentSum: commentSum,
                         createdAt: createdAt
                     };
-                    console.log(_count);
                     yield dbInserter(count_1.Count, _count);
                     requrl = 'http://score.my.tv.sohu.com/digg/get.do?type=' + cid + '&tvid=' + show.tvId;
                     options = {

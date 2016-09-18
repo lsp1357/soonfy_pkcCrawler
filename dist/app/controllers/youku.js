@@ -41,8 +41,15 @@ let parseVideo = function (data) {
     let list_meta = $('meta');
     let type;
     let title;
+    let vid;
     let pos = data.indexOf('videoId = \'');
-    let vid = data.substring(pos + 11, data.indexOf('\';', pos + 11)).replace(/ /g, '');
+    if (pos !== -1) {
+        vid = data.substring(pos + 11, data.indexOf('\';', pos + 11)).replace(/ /g, '');
+    }
+    else {
+        pos = data.indexOf('videoId:\"');
+        vid = data.substring(pos + 9, data.indexOf('\",', pos + 9)).replace(/ /g, '');
+    }
     list_meta.each(function (index, _meta) {
         if ($(_meta).attr('name') === 'irAlbumName') {
             title = $(_meta).attr('content');
@@ -51,9 +58,7 @@ let parseVideo = function (data) {
             type = $(_meta).attr('content');
         }
     });
-    pos = data.indexOf('let showid_en=\"');
-    let requrl = 'http://www.youku.com/show_page/id_z' + data.substring(pos + 15, data.indexOf('\";', pos + 15)) + '.html';
-    let url = $('h1').children('a').attr('href') || requrl;
+    let url = $('a.desc-link').attr('href');
     video.type = type;
     video.title = title;
     video.vid = vid;
@@ -76,28 +81,23 @@ var parseSectionData = function (data) {
 };
 let mvCrawler = function (vid, filmId, url) {
     return __awaiter(this, void 0, void 0, function* () {
+        console.log('mv', vid, filmId, url);
         yield timeout(10 * 1000);
         try {
-            let requrl = 'http://v.youku.com/QVideo/~ajax/getVideoPlayInfo?type=vv&id=';
+            let requrl = 'http://comments.youku.com/comments/~ajax/getStatus.html?__ap=%7B%22videoid%22%3A%22' + vid + '%22%7D';
             let options = {
-                url: requrl,
-                timeout: 1000 * 60 * 2
+                'url': requrl,
+                'timeout': 1000 * 60 * 2
             };
             let body = yield rp(options);
-            let playSum = JSON.parse(body).vv;
-            requrl = 'http://comments.youku.com/comments/~ajax/getStatus.html?__ap=%7B%22videoid%22%3A%22' + vid + '%22%7D';
-            options = {
-                url: requrl,
-                timeout: 1000 * 60 * 2
-            };
-            body = yield rp(options);
             let commentSum = JSON.parse(body).total;
             requrl = 'http://v.youku.com/action/getVideoPlayInfo?beta&vid=' + vid + '&param%5B%5D=updown';
             options = {
-                url: requrl,
-                timeout: 1000 * 60 * 2
+                'url': requrl,
+                'timeout': 1000 * 60 * 2
             };
             body = yield rp(options);
+            let playSum = parseInt(JSON.parse(body).data.stat.vv.replace(/,/g, ''));
             let upSum = parseInt(JSON.parse(body).data.updown.up.replace(/,/g, ''));
             let downSum = parseInt(JSON.parse(body).data.updown.down.replace(/,/g, ''));
             let site = '优酷';
@@ -113,7 +113,6 @@ let mvCrawler = function (vid, filmId, url) {
                 downSum: downSum,
                 createdAt: createdAt
             };
-            console.log(_count);
             yield dbInserter(count_1.Count, _count);
         }
         catch (error) {
@@ -170,15 +169,15 @@ let showCrawler = function (url, filmId) {
                     };
                     let body = yield rp(options);
                     let pos = body.indexOf('videoId = \'');
-                    let vid = body.substring(pos + 11, body.indexOf('\';', pos + 11)).replace(/ /g, '');
-                    let requrl = 'http://v.youku.com/QVideo/~ajax/getVideoPlayInfo?type=vv&id=' + vid;
-                    options = {
-                        url: requrl,
-                        timeout: 1000 * 60 * 2
-                    };
-                    body = yield rp(options);
-                    let play = JSON.parse(body).vv;
-                    requrl = 'http://comments.youku.com/comments/~ajax/getStatus.html?__ap=%7B%22videoid%22%3A%22' + vid + '%22%7D';
+                    let vid;
+                    if (pos !== -1) {
+                        vid = body.substring(pos + 11, body.indexOf('\';', pos + 11)).replace(/ /g, '');
+                    }
+                    else {
+                        pos = body.indexOf('videoId:\"');
+                        vid = body.substring(pos + 9, body.indexOf('\",', pos + 9)).replace(/ /g, '');
+                    }
+                    let requrl = 'http://comments.youku.com/comments/~ajax/getStatus.html?__ap=%7B%22videoid%22%3A%22' + vid + '%22%7D';
                     options = {
                         url: requrl,
                         timeout: 1000 * 60 * 2
@@ -191,6 +190,7 @@ let showCrawler = function (url, filmId) {
                         timeout: 1000 * 60 * 2
                     };
                     body = yield rp(options);
+                    let play = parseInt(JSON.parse(body).data.stat.vv.replace(/,/g, ''));
                     let up = parseInt(JSON.parse(body).data.updown.up.replace(/,/g, ''));
                     let down = parseInt(JSON.parse(body).data.updown.down.replace(/,/g, ''));
                     let name = show.name;
@@ -227,8 +227,8 @@ youku.parse = function (obj) {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             let options = {
-                url: obj.url,
-                timeout: 1000 * 60 * 2
+                'url': obj.url,
+                'timeout': 1000 * 60 * 2
             };
             let body = yield rp(options);
             let { vid, curl, type } = parseVideo(body);

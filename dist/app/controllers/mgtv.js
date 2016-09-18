@@ -106,7 +106,6 @@ let mvCrawler = function (pid, filmId) {
                 downSum: downSum,
                 createdAt: createdAt
             };
-            console.log(_count);
             yield dbInserter(count_1.Count, _count);
         }
         catch (error) {

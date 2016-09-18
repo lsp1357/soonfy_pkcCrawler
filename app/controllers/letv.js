@@ -83,7 +83,7 @@ let mvCrawler = async function (pid, vid, filmId) {
       downSum,
       createdAt
     }
-    console.log(_count);
+    // console.log(_count);
     await dbInserter(Count, _count);
   } catch (error) {
     console.log(error);
@@ -137,7 +137,7 @@ let tvCrawler = async function (pid, cid, length, filmId) {
           commentSum,
           createdAt
         }
-        console.log(_count);
+        // console.log(_count);
         await dbInserter(Count, _count);
         let name = tv.title;
         let up = JSON.parse(body).up;
@@ -209,7 +209,7 @@ let showCrawler = async function (pid, cid, filmId) {
           commentSum,
           createdAt
         }
-        console.log(_count);
+        // console.log(_count);
         await dbInserter(Count, _count);
         let name = show.title;
         let up = JSON.parse(body).up;

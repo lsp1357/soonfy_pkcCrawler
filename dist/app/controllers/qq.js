@@ -84,7 +84,6 @@ let mvCrawler = function (pid, filmId) {
                 playSum: playSum,
                 createdAt: createdAt
             };
-            console.log(_count);
             yield dbInserter(count_1.Count, _count);
             requrl = 'http://sns.video.qq.com/fcgi-bin/video_comment_id?otype=json&op=3&cid=' + pid;
             options = {
@@ -135,7 +134,6 @@ let tvCrawler = function (pid, filmId) {
                 playSum: playSum,
                 createdAt: createdAt
             };
-            console.log(_count);
             yield dbInserter(count_1.Count, _count);
             requrl = 'http://s.video.qq.com/loadplaylist?type=6&plname=qq&otype=json&id=' + pid;
             options = {
@@ -237,7 +235,6 @@ let showCrawler = function (pid, filmId) {
                         playSum: playSum,
                         createdAt: createdAt
                     };
-                    console.log(_count);
                     yield dbInserter(count_1.Count, _count);
                     requrl = 'http://sns.video.qq.com/fcgi-bin/video_comment_id?otype=json&op=3&cid=' + vid;
                     options = {

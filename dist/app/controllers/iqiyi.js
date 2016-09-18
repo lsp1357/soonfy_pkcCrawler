@@ -83,7 +83,6 @@ let mvCrawler = function (pid, filmId) {
                 downSum: downSum,
                 createdAt: createdAt
             };
-            console.log(_count);
             yield dbInserter(count_1.Count, _count);
         }
         catch (error) {
@@ -146,7 +145,6 @@ let tvCrawler = function (pid, filmId) {
                         site: site,
                         createdAt: createdAt,
                     };
-                    console.log(_count);
                     yield dbInserter(count_1.Count, _count);
                     _id = _id + name;
                     let _movie = {

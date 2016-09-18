@@ -76,7 +76,7 @@ let mvCrawler = async function (pid, filmId) {
       downSum,
       createdAt
     }
-    console.log(_count);
+    // console.log(_count);
     await dbInserter(Count, _count);
   } catch (error) {
     console.log(error);
@@ -138,7 +138,7 @@ let tvCrawler = async function (pid, filmId) {
           site,
           createdAt,
         }
-        console.log(_count);
+        // console.log(_count);
         await dbInserter(Count, _count);
         _id = _id + name;
         let _movie = {

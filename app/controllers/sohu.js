@@ -102,7 +102,7 @@ let mvCrawler = async function (pid, vid, tvid, filmId, url) {
       downSum,
       createdAt
     }
-    console.log(_count);
+    // console.log(_count);
     await dbInserter(Count, _count);
   } catch (error) {
     console.log(error);
@@ -151,7 +151,7 @@ let tvCrawler = async function (pid, filmId) {
           commentSum,
           createdAt
         }
-        console.log(_count);
+        // console.log(_count);
         await dbInserter(Count, _count);
         requrl = 'http://score.my.tv.sohu.com/digg/get.do?type=2&tvid=' + tv.tvId;
         options = {
@@ -245,7 +245,7 @@ let showCrawler = async function (pid, cid, filmId) {
           commentSum,
           createdAt
         }
-        console.log(_count);
+        // console.log(_count);
         await dbInserter(Count, _count);
         requrl = 'http://score.my.tv.sohu.com/digg/get.do?type=' + cid + '&tvid=' + show.tvId;
         options = {
