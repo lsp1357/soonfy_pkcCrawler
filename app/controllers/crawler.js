@@ -11,7 +11,7 @@ let moment = require('moment')
 
 let urlsGetter = async function () {
   try {
-    let urls = await Url.find().sort({site: 1, category: 1}).exec();
+    let urls = await Url.find({site: '土豆网'}).sort({site: 1, category: 1}).exec();
     return urls;
   } catch (error) {
     console.log(error);

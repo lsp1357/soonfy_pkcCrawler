@@ -19,7 +19,7 @@ let moment = require('moment');
 let urlsGetter = function () {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            let urls = yield film2url_1.Url.find().sort({ site: 1, category: 1 }).exec();
+            let urls = yield film2url_1.Url.find({ site: '土豆网' }).sort({ site: 1, category: 1 }).exec();
             return urls;
         }
         catch (error) {

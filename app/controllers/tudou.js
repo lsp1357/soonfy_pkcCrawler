@@ -110,7 +110,7 @@ let showCrawler = async function (filmId, url) {
     let showlist = JSON.parse(body).message;
     let promises = showlist.map(async (show, index) => {
       try {
-        await timeout(1 * 1000 * 5 * (index/100));
+        await timeout(1 * 1000 * 5 * (index/20));
         let requrl = 'http://www.tudou.com/crp/itemSum.action?uabcdefg=0&iabcdefg=' + show.iid;
         options = {
           url: requrl,
