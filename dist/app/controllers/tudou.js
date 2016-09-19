@@ -122,7 +122,18 @@ let showCrawler = function (filmId, url) {
                     let requrl = 'http://www.tudou.com/crp/itemSum.action?uabcdefg=0&iabcdefg=' + show.iid;
                     options = {
                         url: requrl,
-                        timeout: 1000 * 60 * 2
+                        timeout: 1000 * 60 * 2,
+                        'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.73 Safari/537.36',
+                        'Host': 'www.tudou.com',
+                        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+                        'Accept-Encoding': 'gzip, deflate, sdch',
+                        'Accept-Language': 'zh-Cn,zh;q=0.8',
+                        'Upgrade-Insecure-Requests': 1,
+                        'Accept-Charset': 'utf-8;q=0.7,*;q=0.7',
+                        'Cache-Control': 'max-age=0',
+                        'Connection': 'keep-alive',
+                        'Referer': 'www.tudou.com',
+                        'Cookie': 'tudou_wurfl=PC||400|400; juid=01at0ovh2t26rt; seid=01at0ovh362sca; yseid=1474273723572bSecp6; yseidcount=1; referhost=http%3A%2F%2Fwww.tudou.com; preferurl=; playMode=3; player_resume=27658z%3Dgw; seidtimeout=1474278869339; ypvid=1474277069416OppfZx; ysestep=9; yseidtimeout=1474284269419; ycid=0; ystep=9'
                     };
                     body = yield rp(options);
                     let play = JSON.parse(body).playNum;
