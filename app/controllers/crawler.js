@@ -28,7 +28,7 @@ let timeout = async function (ms) {
 //并发执行
 let crawler = async function (arr) {
   let promises = arr.map(async function (obj) {
-    // console.log(obj);
+    console.log(obj.site);
     try {
       switch (obj.site) {
         case '爱奇艺':

@@ -39,6 +39,7 @@ let crawler = function (arr) {
     return __awaiter(this, void 0, void 0, function* () {
         let promises = arr.map(function (obj) {
             return __awaiter(this, void 0, void 0, function* () {
+                console.log(obj.site);
                 try {
                     switch (obj.site) {
                         case '爱奇艺':
