@@ -11,6 +11,16 @@ let moment = require('moment')
 
 let urlsGetter = async function () {
   try {
+    let urls = await Url.find({site: {$not: '土豆网'}}).sort({site: 1, category: 1}).exec();
+    return urls;
+  } catch (error) {
+    console.log(error);
+    filmGetter();
+  }
+}
+
+let tdGetter = async function () {
+  try {
     let urls = await Url.find({site: '土豆网'}).sort({site: 1, category: 1}).exec();
     return urls;
   } catch (error) {
@@ -60,6 +70,13 @@ let crawler = async function (arr) {
 let main = async function (num, time) {
   try {
     console.log('start crawler...');
+
+    let objs = await tdGetter();
+    for(let obj of objs){
+      console.log(obj);
+      await Tudou.parse(obj);
+    }
+    console.log('tudou over.');
 
     let urls = await urlsGetter();
     console.log(urls.length);
