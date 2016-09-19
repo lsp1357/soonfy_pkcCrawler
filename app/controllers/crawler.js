@@ -71,7 +71,7 @@ let main = async function (num, time) {
     console.log('------------------------------------');
     console.log('------------------------------------');
     console.log('------------------------------------');
-    console.log(moment(new Date()).format('YYYY-MM-DD HH-mm-ss'));
+    console.log(moment(new Date()).format('YYYY-MM-DD HH:mm:ss'));
     console.log('the crawl time is ', time);
     console.log('now is crawl ', count);
     console.log('urls length', urls.length);
@@ -84,7 +84,7 @@ let main = async function (num, time) {
       console.log('------------------------------------');
       console.log('------------------------------------');
       console.log('------------------------------------');
-      console.log(moment(new Date()).format('YYYY-MM-DD HH-mm-ss'));
+      console.log(moment(new Date()).format('YYYY-MM-DD HH:mm:ss'));
       console.log('the crawl time is ', time);
       console.log('now is crawl ', count);
       console.log('urls length', urls.length);
@@ -102,7 +102,7 @@ let main = async function (num, time) {
     console.log('==> ==> ==> ==> ==> ==> ==> ==> ==> ==>');
     console.log('==> ==> ==> ==> ==> ==> ==> ==> ==> ==>');
     console.log('==> ==> ==> ==> ==> ==> ==> ==> ==> ==>');
-    console.log(moment(new Date()).format('YYYY-MM-DD HH-mm-ss'));
+    console.log(moment(new Date()).format('YYYY-MM-DD HH:mm:ss'));
     console.log('next time crawl.');
     console.log('the crawl time is ', time + 1);
     await timeout(1 * 1000 * 60);
