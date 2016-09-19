@@ -7,6 +7,8 @@ import {Youku} from './youku'
 import {Tudou} from './tudou'
 import {Mgtv} from './mgtv'
 
+let moment = require('moment')
+
 let urlsGetter = async function () {
   try {
     let urls = await Url.find().sort({site: 1, category: 1}).exec();
@@ -69,6 +71,7 @@ let main = async function (num, time) {
     console.log('------------------------------------');
     console.log('------------------------------------');
     console.log('------------------------------------');
+    console.log(moment(new Date()).format('YYYY-MM-DD HH-mm-ss'));
     console.log('the crawl time is ', time);
     console.log('now is crawl ', count);
     console.log('urls length', urls.length);
@@ -81,6 +84,7 @@ let main = async function (num, time) {
       console.log('------------------------------------');
       console.log('------------------------------------');
       console.log('------------------------------------');
+      console.log(moment(new Date()).format('YYYY-MM-DD HH-mm-ss'));
       console.log('the crawl time is ', time);
       console.log('now is crawl ', count);
       console.log('urls length', urls.length);
@@ -98,6 +102,7 @@ let main = async function (num, time) {
     console.log('==> ==> ==> ==> ==> ==> ==> ==> ==> ==>');
     console.log('==> ==> ==> ==> ==> ==> ==> ==> ==> ==>');
     console.log('==> ==> ==> ==> ==> ==> ==> ==> ==> ==>');
+    console.log(moment(new Date()).format('YYYY-MM-DD HH-mm-ss'));
     console.log('next time crawl.');
     console.log('the crawl time is ', time + 1);
     await timeout(1 * 1000 * 60);

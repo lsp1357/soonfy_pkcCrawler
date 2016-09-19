@@ -15,6 +15,7 @@ const sohu_1 = require('./sohu');
 const youku_1 = require('./youku');
 const tudou_1 = require('./tudou');
 const mgtv_1 = require('./mgtv');
+let moment = require('moment');
 let urlsGetter = function () {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -80,6 +81,7 @@ let main = function (num, time) {
             console.log('------------------------------------');
             console.log('------------------------------------');
             console.log('------------------------------------');
+            console.log(moment(new Date()).format('YYYY-MM-DD HH-mm-ss'));
             console.log('the crawl time is ', time);
             console.log('now is crawl ', count);
             console.log('urls length', urls.length);
@@ -91,6 +93,7 @@ let main = function (num, time) {
                 console.log('------------------------------------');
                 console.log('------------------------------------');
                 console.log('------------------------------------');
+                console.log(moment(new Date()).format('YYYY-MM-DD HH-mm-ss'));
                 console.log('the crawl time is ', time);
                 console.log('now is crawl ', count);
                 console.log('urls length', urls.length);
@@ -104,6 +107,7 @@ let main = function (num, time) {
             console.log('==> ==> ==> ==> ==> ==> ==> ==> ==> ==>');
             console.log('==> ==> ==> ==> ==> ==> ==> ==> ==> ==>');
             console.log('==> ==> ==> ==> ==> ==> ==> ==> ==> ==>');
+            console.log(moment(new Date()).format('YYYY-MM-DD HH-mm-ss'));
             console.log('next time crawl.');
             console.log('the crawl time is ', time + 1);
             yield timeout(1 * 1000 * 60);
