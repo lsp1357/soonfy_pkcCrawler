@@ -108,7 +108,8 @@ let showCrawler = async function (filmId, url) {
     }
     body = await rp(options);
     let showlist = JSON.parse(body).message;
-    let promises = showlist.map(async (show, index) => {
+    // let promises = showlist.map(async (show, index) => {
+    for(let show of showlist){
       try {
         await timeout(1 * 1000 * 10 * (index/20));
         let requrl = 'http://www.tudou.com/crp/itemSum.action?uabcdefg=0&iabcdefg=' + show.iid;
@@ -145,8 +146,9 @@ let showCrawler = async function (filmId, url) {
       } catch (error) {
         console.log(error);
       }
-    })
-    return Promise.all(promises);
+    }
+    // })
+    // return Promise.all(promises);
   } catch (error) {
     console.log(error);
   }

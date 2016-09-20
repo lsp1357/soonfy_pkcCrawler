@@ -276,6 +276,15 @@ qq.parse = async function (obj) {
       timeout: 1000 * 60 * 2
     }
     let body = await rp(options);
+    let $ = cheerio.load(body)
+    if($('title').text().includes('正在跳转')){
+      let url = obj.url.replace(/\/prev\//ig, "/cover/").replace(/cover\/(\w)\//ig, "x/cover/")
+      let options = {
+        url: url,
+        timeout: 1000 * 60 * 2
+      }
+      body = await rp(options)
+    }
     let {title, pid, type} = parseVideo(body);
     if (title.indexOf('utf-8') === -1 && title.indexOf('zh-cn') === -1 && title.indexOf('Content-Type') === -1) {
       switch (type) {
