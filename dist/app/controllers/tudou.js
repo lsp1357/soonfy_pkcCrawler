@@ -116,9 +116,9 @@ let showCrawler = function (filmId, url) {
             };
             body = yield rp(options);
             let showlist = JSON.parse(body).message;
-            for (let show of showlist) {
+            let promises = showlist.map((show, index) => __awaiter(this, void 0, void 0, function* () {
                 try {
-                    yield timeout(1 * 1000 * 10);
+                    yield timeout(1 * 1000 * 10 * (index / 20));
                     let requrl = 'http://www.tudou.com/crp/itemSum.action?uabcdefg=0&iabcdefg=' + show.iid;
                     options = {
                         url: requrl,
@@ -154,7 +154,8 @@ let showCrawler = function (filmId, url) {
                 catch (error) {
                     console.log(error);
                 }
-            }
+            }));
+            return Promise.all(promises);
         }
         catch (error) {
             console.log(error);
